@@ -3,6 +3,12 @@
 # pip install pyserial pygame
 # =========================
 
+# =========================
+# source /f/TuanAnhStudy/autopilot-self-learning/.venv/Scripts/activate
+# C:/Python313/python.exe f:/TuanAnhStudy/autopilot-self-learning/ardumyload/test/icm42688_test.py
+# C:/Python313/python.exe icm42688_test.py
+# =========================
+
 import pygame
 import serial
 import math
@@ -240,24 +246,25 @@ def draw_imu_graphs():
     graph_h = 90
     gap = 16
 
-    # Khi IMU đứng yên, dùng scale hẹp để soi nhiễu nhỏ
+    # Accel thường xem trong khoảng ±2g là đủ
     draw_graph(screen, (graph_x, graph_y + 0 * (graph_h + gap), graph_w, graph_h),
-               history["ax"], "Accel X - ax", "g", -0.05, 0.05, (255, 100, 100))
-
+               history["ax"], "Accel X - ax", "g", -1.0, 1.0, (255, 100, 100))
+    
     draw_graph(screen, (graph_x, graph_y + 1 * (graph_h + gap), graph_w, graph_h),
-               history["ay"], "Accel Y - ay", "g", -0.05, 0.05, (100, 255, 100))
+               history["ay"], "Accel Y - ay", "g", -1.0, 1.0, (100, 255, 100))
 
     draw_graph(screen, (graph_x, graph_y + 2 * (graph_h + gap), graph_w, graph_h),
-               history["az"], "Accel Z - az", "g", 0.95, 1.05, (100, 150, 255))
+               history["az"], "Accel Z - az", "g", -1.0, 1.0, (100, 150, 255))
 
+    # Gyro để ±250 deg/s cho dễ nhìn. Nếu bạn quay nhanh quá thì tăng lên ±500
     draw_graph(screen, (graph_x, graph_y + 3 * (graph_h + gap), graph_w, graph_h),
-               history["gx"], "Gyro X - gx", "deg/s", -1.0, 1.0, (255, 160, 100))
+               history["gx"], "Gyro X - gx", "deg/s", -10.0, 10.0, (255, 160, 100))
 
     draw_graph(screen, (graph_x, graph_y + 4 * (graph_h + gap), graph_w, graph_h),
-               history["gy"], "Gyro Y - gy", "deg/s", -1.0, 1.0, (180, 255, 100))
+               history["gy"], "Gyro Y - gy", "deg/s", -10.0, 10.0, (180, 255, 100))
 
     draw_graph(screen, (graph_x, graph_y + 5 * (graph_h + gap), graph_w, graph_h),
-               history["gz"], "Gyro Z - gz", "deg/s", -1.0, 1.0, (180, 180, 255))
+               history["gz"], "Gyro Z - gz", "deg/s", -10.0, 10.0, (180, 180, 255))
 
 # =========================
 # VÒNG LẶP CHÍNH
